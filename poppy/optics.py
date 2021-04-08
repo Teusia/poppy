@@ -1294,7 +1294,7 @@ class MultiSegmentAperture(AnalyticOpticalElement, ABC):
         if ring <= 1:
             return (self._segment_spacing) * ring
 
-    def _aper_center(self, aper_index):
+    def _aper_center(self, aper_index,clocking = 0):
         """ Center coordinates of a given hexagon
         counting clockwise around each ring
 
@@ -1343,6 +1343,11 @@ class MultiSegmentAperture(AnalyticOpticalElement, ABC):
 
             xpos = xpos0 + dx * np.mod(index_in_ring - 1, ring)
             ypos = ypos0 + dy * np.mod(index_in_ring - 1, ring)
+            
+        if clocking != 0:
+            clocking *= np.pi/180
+            rotmat = [[np.cos(clocking),-np.sin(clocking)],[np.sin(clocking),np.cos(clocking)]]
+            
 
         return ypos, xpos
 
